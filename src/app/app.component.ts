@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CustomControlValueAccessorComponent } from './custom-control-value-accessor/custom-control-value-accessor.component';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'programmatically-created-component-add-formcontrolname';
+
+  formGroup: FormGroup = this.formBuilder.group({ one: ['', []] });
+
+  constructor(
+    private viewContainerRef: ViewContainerRef,
+    private formBuilder: FormBuilder
+  ) {}
+
+  createComponent() {
+    this.viewContainerRef.createComponent(
+      CustomControlValueAccessorComponent
+    );
+  }
 }
